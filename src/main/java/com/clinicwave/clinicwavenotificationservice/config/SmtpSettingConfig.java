@@ -33,12 +33,12 @@ public class SmtpSettingConfig {
   public void initializeSmtpSettings() {
     if (smtpSettingRepository.count() == 0) {
       SmtpSetting smtpSetting = new SmtpSetting();
-      smtpSetting.setHost("smtp.gmail.com");
-      smtpSetting.setPort(587);
-      smtpSetting.setUsername("aamirshaikh3232@gmail.com");
-      smtpSetting.setPassword("password");
-      smtpSetting.setAuth(true);
-      smtpSetting.setStarttlsEnable(true);
+      smtpSetting.setHost("localhost");
+      smtpSetting.setPort(1025);
+      smtpSetting.setUsername("");
+      smtpSetting.setPassword("");
+      smtpSetting.setAuth(false);
+      smtpSetting.setStarttlsEnable(false);
       smtpSetting.setIsActive(true);
       smtpSettingRepository.save(smtpSetting);
     }
