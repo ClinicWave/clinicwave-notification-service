@@ -53,6 +53,39 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
   }
 
   /**
+   * Handles InvalidNotificationTypeException.
+   */
+  @ExceptionHandler(InvalidNotificationTypeException.class)
+  public ResponseEntity<ErrorResponseDto> handleInvalidNotificationTypeException(
+          Exception exception,
+          WebRequest webRequest
+  ) {
+    return createErrorResponse(exception, webRequest, HttpStatus.BAD_REQUEST);
+  }
+
+  /**
+   * Handles EmailSendingException.
+   */
+  @ExceptionHandler(EmailSendingException.class)
+  public ResponseEntity<ErrorResponseDto> handleEmailSendingException(
+          Exception exception,
+          WebRequest webRequest
+  ) {
+    return createErrorResponse(exception, webRequest, HttpStatus.SERVICE_UNAVAILABLE);
+  }
+
+  /**
+   * Handles TemplateProcessingException.
+   */
+  @ExceptionHandler(TemplateProcessingException.class)
+  public ResponseEntity<ErrorResponseDto> handleTemplateProcessingException(
+          Exception exception,
+          WebRequest webRequest
+  ) {
+    return createErrorResponse(exception, webRequest, HttpStatus.INTERNAL_SERVER_ERROR);
+  }
+
+  /**
    * Handles MethodArgumentNotValidException.
    * This exception is thrown when validation on an argument annotated with @Valid fails.
    *
