@@ -1,13 +1,22 @@
 package com.clinicwave.clinicwavenotificationservice.exception;
 
 import com.clinicwave.clinicwavenotificationservice.dto.ErrorResponseDto;
+import com.clinicwave.clinicwavenotificationservice.dto.ValidationErrorResponseDto;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.time.LocalDateTime;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * This class is a global exception handler for the application.
@@ -20,7 +29,7 @@ import java.time.LocalDateTime;
  * @author aamir on 7/8/24
  */
 @ControllerAdvice
-public class GlobalExceptionHandler {
+public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
   /**
    * Handles all types of exceptions.
    */
@@ -41,6 +50,77 @@ public class GlobalExceptionHandler {
           WebRequest webRequest
   ) {
     return createErrorResponse(exception, webRequest, HttpStatus.NOT_FOUND);
+  }
+
+  /**
+   * Handles InvalidNotificationTypeException.
+   */
+  @ExceptionHandler(InvalidNotificationTypeException.class)
+  public ResponseEntity<ErrorResponseDto> handleInvalidNotificationTypeException(
+          Exception exception,
+          WebRequest webRequest
+  ) {
+    return createErrorResponse(exception, webRequest, HttpStatus.BAD_REQUEST);
+  }
+
+  /**
+   * Handles EmailSendingException.
+   */
+  @ExceptionHandler(EmailSendingException.class)
+  public ResponseEntity<ErrorResponseDto> handleEmailSendingException(
+          Exception exception,
+          WebRequest webRequest
+  ) {
+    return createErrorResponse(exception, webRequest, HttpStatus.SERVICE_UNAVAILABLE);
+  }
+
+  /**
+   * Handles TemplateProcessingException.
+   */
+  @ExceptionHandler(TemplateProcessingException.class)
+  public ResponseEntity<ErrorResponseDto> handleTemplateProcessingException(
+          Exception exception,
+          WebRequest webRequest
+  ) {
+    return createErrorResponse(exception, webRequest, HttpStatus.INTERNAL_SERVER_ERROR);
+  }
+
+  /**
+   * Handles MethodArgumentNotValidException.
+   * This exception is thrown when validation on an argument annotated with @Valid fails.
+   *
+   * @param exception  the exception that was thrown
+   * @param headers    the headers for the response
+   * @param status     the status code for the response
+   * @param webRequest the current web request
+   * @return a response entity containing a ValidationErrorResponseDto
+   */
+  @Override
+  protected ResponseEntity<Object> handleMethodArgumentNotValid(
+          MethodArgumentNotValidException exception,
+          @NonNull HttpHeaders headers,
+          HttpStatusCode status,
+          WebRequest webRequest
+  ) {
+    Map<String, String> errors = exception.getBindingResult()
+            .getFieldErrors()
+            .stream()
+            .filter(error -> error.getDefaultMessage() != null)
+            .collect(Collectors.toMap(
+                    FieldError::getField,
+                    FieldError::getDefaultMessage,
+                    (existing, replacement) -> existing
+            ));
+
+    ValidationErrorResponseDto validationErrorResponseDto = new ValidationErrorResponseDto(
+            webRequest.getDescription(false),
+            status.value(),
+            "Validation failed",
+            LocalDateTime.now(),
+            errors
+    );
+
+    return new ResponseEntity<>(validationErrorResponseDto, status);
   }
 
   /**
