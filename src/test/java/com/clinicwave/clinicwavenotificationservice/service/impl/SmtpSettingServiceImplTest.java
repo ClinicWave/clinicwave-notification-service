@@ -1,9 +1,8 @@
-package com.clinicwave.clinicwavenotificationservice.service;
+package com.clinicwave.clinicwavenotificationservice.service.impl;
 
 import com.clinicwave.clinicwavenotificationservice.domain.SmtpSetting;
 import com.clinicwave.clinicwavenotificationservice.exception.ResourceNotFoundException;
 import com.clinicwave.clinicwavenotificationservice.repository.SmtpSettingRepository;
-import com.clinicwave.clinicwavenotificationservice.service.impl.SmtpSettingServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
