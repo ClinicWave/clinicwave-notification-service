@@ -8,5 +8,6 @@
     <p>Hello <span th:text="${userName}"></span>,</p>
     <p>Your verification code is: <strong th:text="${verificationCode}"></strong></p>
     <p>Please use this code to verify your email address.</p>
+    <a th:href="@{${verificationLink}}">Verify Your Account</a>
 </body>
 </html>
