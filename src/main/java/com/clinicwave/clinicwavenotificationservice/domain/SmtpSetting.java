@@ -27,6 +27,9 @@ public class SmtpSetting {
   private Integer port;
 
   @Column(nullable = false)
+  private String fromAddress;
+
+  @Column(nullable = false)
   private String username;
 
   @Column(nullable = false)

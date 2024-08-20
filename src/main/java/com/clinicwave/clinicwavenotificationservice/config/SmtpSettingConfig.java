@@ -35,6 +35,7 @@ public class SmtpSettingConfig {
       SmtpSetting smtpSetting = new SmtpSetting();
       smtpSetting.setHost("localhost");
       smtpSetting.setPort(1025);
+      smtpSetting.setFromAddress("no-reply@clinicwave.com");
       smtpSetting.setUsername("");
       smtpSetting.setPassword("");
       smtpSetting.setAuth(false);

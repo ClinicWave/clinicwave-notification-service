@@ -38,7 +38,8 @@ class SmtpSettingTest {
     smtpSetting = new SmtpSetting();
     smtpSetting.setHost("smtp.gmail.com");
     smtpSetting.setPort(587);
-    smtpSetting.setUsername("aamirshaikh3232@gmail.com");
+    smtpSetting.setFromAddress("no-reply@clinicwave.com");
+    smtpSetting.setUsername("clinicwave");
     smtpSetting.setPassword("password");
     smtpSetting.setAuth(true);
     smtpSetting.setStarttlsEnable(true);
@@ -69,6 +70,7 @@ class SmtpSettingTest {
     assertNotNull(savedSmtpSetting);
     assertEquals(smtpSetting.getHost(), savedSmtpSetting.getHost());
     assertEquals(smtpSetting.getPort(), savedSmtpSetting.getPort());
+    assertEquals(smtpSetting.getFromAddress(), savedSmtpSetting.getFromAddress());
     assertEquals(smtpSetting.getUsername(), savedSmtpSetting.getUsername());
     assertEquals(smtpSetting.getPassword(), savedSmtpSetting.getPassword());
     assertEquals(smtpSetting.getAuth(), savedSmtpSetting.getAuth());
@@ -82,7 +84,8 @@ class SmtpSettingTest {
     smtpSettingRepository.save(smtpSetting);
     smtpSetting.setHost("smtp.mailtrap.io");
     smtpSetting.setPort(2525);
-    smtpSetting.setUsername("johndoe@email.com");
+    smtpSetting.setFromAddress("no-reply@test.com");
+    smtpSetting.setUsername("admin");
     smtpSetting.setPassword("password123");
     smtpSetting.setAuth(false);
     smtpSetting.setStarttlsEnable(false);
@@ -92,6 +95,7 @@ class SmtpSettingTest {
     assertNotNull(updatedSmtpSetting);
     assertEquals(smtpSetting.getHost(), updatedSmtpSetting.getHost());
     assertEquals(smtpSetting.getPort(), updatedSmtpSetting.getPort());
+    assertEquals(smtpSetting.getFromAddress(), updatedSmtpSetting.getFromAddress());
     assertEquals(smtpSetting.getUsername(), updatedSmtpSetting.getUsername());
     assertEquals(smtpSetting.getPassword(), updatedSmtpSetting.getPassword());
     assertEquals(smtpSetting.getAuth(), updatedSmtpSetting.getAuth());
