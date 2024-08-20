@@ -44,6 +44,7 @@ class SmtpSettingServiceImplTest {
     smtpSetting = new SmtpSetting();
     smtpSetting.setHost("smtp.example.com");
     smtpSetting.setPort(587);
+    smtpSetting.setFromAddress("no-reply@test.com");
     smtpSetting.setUsername("testuser");
     smtpSetting.setPassword("password");
     smtpSetting.setAuth(true);
@@ -68,6 +69,7 @@ class SmtpSettingServiceImplTest {
     assertEquals(smtpSetting.getPassword(), mailSender.getPassword());
 
     Properties props = mailSender.getJavaMailProperties();
+    assertEquals("no-reply@test.com", props.getProperty("mail.smtp.from"));
     assertEquals("smtp", props.getProperty("mail.transport.protocol"));
     assertEquals(smtpSetting.getAuth().toString(), props.getProperty("mail.smtp.auth"));
     assertEquals(smtpSetting.getStarttlsEnable().toString(), props.getProperty("mail.smtp.starttls.enable"));

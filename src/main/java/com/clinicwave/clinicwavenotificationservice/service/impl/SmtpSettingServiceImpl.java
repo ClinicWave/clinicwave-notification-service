@@ -46,6 +46,7 @@ public class SmtpSettingServiceImpl implements SmtpSettingService {
     mailSender.setPassword(setting.getPassword());
 
     Properties props = mailSender.getJavaMailProperties();
+    props.put("mail.smtp.from", setting.getFromAddress());
     props.put("mail.transport.protocol", "smtp");
     props.put("mail.smtp.auth", setting.getAuth().toString());
     props.put("mail.smtp.starttls.enable", setting.getStarttlsEnable().toString());
