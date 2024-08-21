@@ -4,6 +4,7 @@ import com.clinicwave.clinicwavenotificationservice.domain.SmtpSetting;
 import com.clinicwave.clinicwavenotificationservice.repository.SmtpSettingRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -14,6 +15,12 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class SmtpSettingConfig {
+  @Value("${mailtrap.username}")
+  private String mailtrapUsername;
+
+  @Value("${mailtrap.password}")
+  private String mailtrapPassword;
+
   private final SmtpSettingRepository smtpSettingRepository;
 
   /**
@@ -33,13 +40,13 @@ public class SmtpSettingConfig {
   public void initializeSmtpSettings() {
     if (smtpSettingRepository.count() == 0) {
       SmtpSetting smtpSetting = new SmtpSetting();
-      smtpSetting.setHost("localhost");
-      smtpSetting.setPort(1025);
+      smtpSetting.setHost("sandbox.smtp.mailtrap.io");
+      smtpSetting.setPort(2525);
       smtpSetting.setFromAddress("no-reply@clinicwave.com");
-      smtpSetting.setUsername("");
-      smtpSetting.setPassword("");
-      smtpSetting.setAuth(false);
-      smtpSetting.setStarttlsEnable(false);
+      smtpSetting.setUsername(mailtrapUsername);
+      smtpSetting.setPassword(mailtrapPassword);
+      smtpSetting.setAuth(true);
+      smtpSetting.setStarttlsEnable(true);
       smtpSetting.setIsActive(true);
       smtpSettingRepository.save(smtpSetting);
     }
