@@ -1,8 +1,14 @@
 version: "3"
 services:
-    mailhog:
-        image: mailhog/mailhog:latest
+    db:
+        container_name: clinicwave-notification-postgres
+        image: postgres:latest
         restart: always
+        environment:
+            POSTGRES_DB: clinicwave-notification
+            POSTGRES_USER: root
+            POSTGRES_PASSWORD: root
+        volumes:
+            - ./data:/var/lib/postgresql/data
         ports:
-            - "1025:1025"
-            - "8025:8025"
+            - "5433:5432"
