@@ -7,6 +7,7 @@ import com.clinicwave.clinicwavenotificationservice.service.NotificationService;
 import com.clinicwave.clinicwavenotificationservice.strategy.NotificationStrategy;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
 import java.util.EnumMap;
@@ -25,6 +26,9 @@ import java.util.Optional;
 public class NotificationServiceImpl implements NotificationService {
   private final Map<NotificationTypeEnum, NotificationStrategy> notificationStrategyMap;
 
+  private static final String TOPIC_NAME = "notification-topic";
+  private static final String GROUP_ID = "notification-group";
+
   /**
    * Constructor for dependency injection.
    *
@@ -38,6 +42,17 @@ public class NotificationServiceImpl implements NotificationService {
     // Add each notification strategy to the map using its type as the key
     notificationStrategyList.forEach(strategy -> notificationStrategyMap.put(strategy.getType(), strategy));
     log.info("Notification strategies initialized: {}", notificationStrategyMap.keySet());
+  }
+
+  /**
+   * Kafka listener method to handle notification requests.
+   *
+   * @param notificationRequestDto The notification request to be handled.
+   */
+  @KafkaListener(topics = TOPIC_NAME, groupId = GROUP_ID)
+  public void handleNotification(NotificationRequestDto notificationRequestDto) {
+    log.info("Received notification request: {}", notificationRequestDto);
+    sendNotification(notificationRequestDto);
   }
 
   /**

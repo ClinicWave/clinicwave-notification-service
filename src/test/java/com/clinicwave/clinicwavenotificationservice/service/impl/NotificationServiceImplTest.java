@@ -50,6 +50,19 @@ class NotificationServiceImplTest {
     notificationService = new NotificationServiceImpl(strategies);
   }
 
+  @Test
+  @DisplayName("handleNotification should process the received notification request")
+  void handleNotification_ShouldProcessReceivedNotificationRequest() {
+    NotificationRequestDto requestDto = createNotificationRequestDto(NotificationTypeEnum.EMAIL);
+
+    // We need to spy on the notificationService to verify the sendNotification method is called
+    NotificationServiceImpl spyNotificationService = spy(notificationService);
+
+    spyNotificationService.handleNotification(requestDto);
+
+    verify(spyNotificationService, times(1)).sendNotification(requestDto);
+  }
+
   @ParameterizedTest
   @EnumSource(value = NotificationTypeEnum.class, names = {"EMAIL", "SMS"})
   @DisplayName("sendNotification should use correct strategy")
