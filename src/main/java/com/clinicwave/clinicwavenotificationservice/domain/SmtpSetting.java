@@ -1,5 +1,6 @@
 package com.clinicwave.clinicwavenotificationservice.domain;
 
+import com.clinicwave.clinicwavenotificationservice.audit.Audit;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,7 +16,7 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class SmtpSetting {
+public class SmtpSetting extends Audit {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
