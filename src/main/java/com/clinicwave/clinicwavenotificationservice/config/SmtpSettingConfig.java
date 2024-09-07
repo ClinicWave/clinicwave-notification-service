@@ -15,10 +15,10 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class SmtpSettingConfig {
-  @Value("${mailtrap.username}")
+  @Value("${MAILTRAP_USERNAME}")
   private String mailtrapUsername;
 
-  @Value("${mailtrap.password}")
+  @Value("${MAILTRAP_PASSWORD}")
   private String mailtrapPassword;
 
   private final SmtpSettingRepository smtpSettingRepository;
