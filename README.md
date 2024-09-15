@@ -56,15 +56,34 @@ Kafka.
     docker-compose up -d
     ```
 
-3. Build the project:
+3. Create `.env` in the project root and add the following environment variables:
+   ```sh
+   DOCKER_POSTGRES_USERNAME=<your-docker-postgres-username>
+   DOCKER_POSTGRES_PASSWORD=<your-docker-postgres-password>
+   ```
+4. Create `secrets.properties` in the `src/main/resources` directory and add the following properties:
+   ```sh
+   MAILTRAP_USERNAME=<your-mailtrap-username>
+   MAILTRAP_PASSWORD=<your-mailtrap-password>
+   DOCKER_POSTGRES_USERNAME=<your-docker-postgres-username>
+   DOCKER_POSTGRES_PASSWORD=<your-docker-postgres-password>
+   ```
+   **Note:** You need to sign up for a [Mailtrap](https://mailtrap.io) account to get the `MAILTRAP_USERNAME` and `MAILTRAP_PASSWORD`. After signing up:
+   - Create a new inbox.
+   - Go to the "Integration" tab.
+   - Choose "SMTP" integration.
+   - Copy the `username` and paste it into `MAILTRAP_USERNAME` in `secrets.properties`.
+   - Copy the `password` and paste it into `MAILTRAP_PASSWORD` in `secrets.properties`.
+
+5. Build the project:
     ```sh
     mvn clean install
     ```
-4. Run the application:
+6. Run the application:
     ```sh
     mvn spring-boot:run
     ```
-5. Testing the application:
+7. Testing the application:
     ```sh
     mvn test
     ```
