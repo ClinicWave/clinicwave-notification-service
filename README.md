@@ -94,6 +94,10 @@ Kafka.
 
 - Send notification: `POST /api/notifications/send`
 
+### Contributing
+
+We welcome contributions to this project! If you'd like to contribute, please read our [contributing guidelines](CONTRIBUTING.md) first.
+
 ### Contact
 
 For any questions or feedback, please feel free to reach out to the repository owner
