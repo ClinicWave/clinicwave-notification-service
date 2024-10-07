@@ -41,9 +41,11 @@ Kafka.
 
 - Docker
 - Java 17 or higher
-- Maven 3.6.0 or higher
+- [Mailtrap](https://mailtrap.io) account for email testing
 
 ### Steps
+
+Before proceeding, please read the [contributing guidelines](CONTRIBUTING.md).
 
 1. Clone the repository:
    ```sh
@@ -53,39 +55,36 @@ Kafka.
 
 2. Run docker-compose to start the required services:
     ```sh
-    docker-compose up -d
+    docker compose up -d
     ```
 
-3. Create `.env` in the project root and add the following environment variables:
-   ```sh
-   DOCKER_POSTGRES_USERNAME=<your-docker-postgres-username>
-   DOCKER_POSTGRES_PASSWORD=<your-docker-postgres-password>
-   ```
-4. Create `secrets.properties` in the `src/main/resources` directory and add the following properties:
+3. Update the existing `secrets.properties` file in the `src/main/resources` directory with your Mailtrap credentials:
    ```sh
    MAILTRAP_USERNAME=<your-mailtrap-username>
    MAILTRAP_PASSWORD=<your-mailtrap-password>
-   DOCKER_POSTGRES_USERNAME=<your-docker-postgres-username>
-   DOCKER_POSTGRES_PASSWORD=<your-docker-postgres-password>
    ```
-   **Note:** You need to sign up for a [Mailtrap](https://mailtrap.io) account to get the `MAILTRAP_USERNAME` and `MAILTRAP_PASSWORD`. After signing up:
-   - Create a new inbox.
-   - Go to the "Integration" tab.
-   - Choose "SMTP" integration.
-   - Copy the `username` and paste it into `MAILTRAP_USERNAME` in `secrets.properties`.
-   - Copy the `password` and paste it into `MAILTRAP_PASSWORD` in `secrets.properties`.
+   **Note:** You need to sign up for a [Mailtrap](https://mailtrap.io) account to get the `MAILTRAP_USERNAME` and
+   `MAILTRAP_PASSWORD`. After signing up:
+    - Create a new inbox.
+    - Go to the "Integration" tab.
+    - Choose "SMTP" integration.
+    - Copy the `username` and paste it into `MAILTRAP_USERNAME` in `secrets.properties`.
+    - Copy the `password` and paste it into `MAILTRAP_PASSWORD` in `secrets.properties`.
 
-5. Build the project:
+4. Build the project:
     ```sh
-    mvn clean install
+    ./mvnw clean install
     ```
-6. Run the application:
+5. Run the application:
     ```sh
-    mvn spring-boot:run
+    ./mvnw spring-boot:run -Dspring-boot.run.profiles=docker
     ```
-7. Testing the application:
+
+Alternatively, you can use the provided `start-backend.sh` script to start the backend:
+
+- Run the script to start the backend:
     ```sh
-    mvn test
+    ./installer/start-backend.sh
     ```
 
 ### API Endpoints
@@ -96,7 +95,8 @@ Kafka.
 
 ### Contributing
 
-We welcome contributions to this project! If you'd like to contribute, please read our [contributing guidelines](CONTRIBUTING.md) first.
+We welcome contributions to this project! If you'd like to contribute, please read
+our [contributing guidelines](CONTRIBUTING.md) first.
 
 ### Contact
 
